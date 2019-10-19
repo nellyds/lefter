@@ -29,7 +29,7 @@ if __name__ == "__main__":
     # loginPassword = input("Your facebook password  :  ")
     redFlag = input("what don't you like about people?  :  ")
     driver = webdriver.Chrome()
-    facebookLogin(driver, 'ndsilva822@gmail.com', 'ppfFrisky11')
+    facebookLogin(driver, '', '')
     Bumble.bumbleLogin(driver)
     time.sleep(4)
     Bumble.main_loop(driver)
