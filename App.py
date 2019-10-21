@@ -1,15 +1,9 @@
 from selenium import webdriver
 import time
-import pytesseract
-import os
-from PIL import Image
-import re
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
 import Bumble
-
 import Tinder
+import Email
 
 def facebookLogin(driver, loginName, loginPassword):
     driver.get('http://www.facebook.com/')
@@ -26,13 +20,14 @@ def facebookLogin(driver, loginName, loginPassword):
 
 if __name__ == "__main__":
     loginName = input("Your email/facebook login  :  ")
-    # loginPassword = input("Your facebook password  :  ")
+    loginPassword = input("Your facebook password  :  ")
     redFlag = input("what don't you like about people?  :  ")
     driver = webdriver.Chrome()
-    facebookLogin(driver, '', '')
+    facebookLogin(driver, loginName, loginPassword)
     Bumble.bumbleLogin(driver)
-    time.sleep(4)
-    Bumble.main_loop(driver)
-
+    Bumble.readProfile(driver)
+    Tinder.tinderLogin(driver)
+    Tinder.tinderSwipe(driver)
+    Email.allDoneSwiping(loginName)
 
 

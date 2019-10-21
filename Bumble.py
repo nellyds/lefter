@@ -15,6 +15,7 @@ def bumbleLogin(driver):
     time.sleep(5)
     try:
         driver.find_element_by_xpath("//div[contains(@class, 'color-provider-facebook')]").click()
+        time.sleep(5)
     except:
         NoSuchElementException
         bumbleLogin(driver)
@@ -36,25 +37,31 @@ def readProfile(driver):
         judgeProfile(profileText, driver)
     except:
         NoSuchElementException
-        driver.close()
+        try:
+            driver.find_element_by_xpath("//*[contains(text(), 'all caught up')]")
+
+        except:
+            NoSuchElementException
+            readProfile(driver)
 
 def buildRedFlagRegex(redFlag):
     redFlag = redFlag.split(",")
     return '^('+''.join(['(?!'+ x + ')' for x in redFlag])+'.)*$'
 
 def judgeProfile(profileText, driver, redFlag):
-    driver.find_element_by_xpath("//*[contains(@class, 'encounters-action--like')]").click() if \
+    driver.find_element_by_xpath("//*[contains(@class, 'encounters-action--dislike')]").click() if \
         (re.match(buildRedFlagRegex(redFlag), profileText)) else \
-        driver.find_element_by_xpath("//div[contains(@class, 'encounters-action--dislike')]").click()
+        driver.find_element_by_xpath("//div[contains(@class, 'encounters-action--like')]").click()
 
 
-def main_loop(driver):
-    try:
-        readProfile(driver)
-    except:
-        try:
-            driver.find_element_by_xpath("//*[contains(text(), 'all caught up')]")
-            allDoneSwiping()
-        except:
-            NoSuchElementException
-    driver.close
+# def main_loop(driver):
+#     try:
+#         readProfile(driver)
+#     except:
+#         try:
+#             driver.find_element_by_xpath("//*[contains(text(), 'all caught up')]")
+#
+#         except:
+#             NoSuchElementException
+#
+

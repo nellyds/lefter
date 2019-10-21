@@ -1,7 +1,5 @@
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
-from selenium import webdriver
 import time
 
 def tinderLogin(driver):
@@ -12,6 +10,9 @@ def tinderSwipe(driver):
     actions = ActionChains(driver)
     try:
         while (driver.find_element_by_xpath("//div[contains(@aria-label, 'Like')]")):
+            time.sleep(.5)
             actions.move_to_element(driver.find_element_by_xpath("//div[contains(@aria-label, 'Like')]")).click().perform()
     except:
         NoSuchElementException
+
+
